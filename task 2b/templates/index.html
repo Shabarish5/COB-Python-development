@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Search</title>
+    <style>
+        body {
+            background-color: #DF826C;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            color: #F8FFD2;
+            margin-bottom: 20px;
+        }
+
+        form {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #D0F288;
+        }
+
+        input {
+            padding: 8px;
+            font-size: 16px;
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color:#8ADAB2;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        p {
+            color: #FFFFDD;
+        }
+
+        h2 {
+            color:#C7DCA7;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+
+        hr {
+            border: 0;
+            height: 1px;
+            background-color: #ccc;
+            margin: 10px 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <h1>Recipe Search</h1>
+    <form method="post" action="/">
+        <label for="ingredient">Enter an ingredient:</label>
+        <input type="text" name="ingredient" required>
+        <button type="submit">Search</button>
+    </form>
+
+    {% if ingredient %}
+        <p>Recipes for {{ ingredient }} have been saved to the file.</p>
+    {% endif %}
+
+    {% if hits %}
+        <h2>Recipes:</h2>
+        <ul>
+            {% for hit in hits %}
+                <li>{{ hit.recipe.label }}</li>
+                <ul>
+                    {% for line in hit.recipe.ingredientLines %}
+                        <li>{{ line }}</li>
+                    {% endfor %}
+                </ul>
+                <p>Diet Labels: {{ hit.recipe.dietLabels }}</p>
+                <hr>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>
